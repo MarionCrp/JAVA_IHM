@@ -1,0 +1,42 @@
+                    
+                     DS IHM_JAVA
+                     -----------  
+   
+            le mardi 7 juin 2016 de 10h10 à 12h00 (sans document)
+                     Salle  sc26 
+
+       Partie 1 ( 35 minutes ) : Répondre directement sur un questionnaire
+       Partie 2 ( 1 h 15 )     : Exercice
+ 
+
+   TP JAVA A RENDRE AU PLUS TARD LE mardi 7 juin 2016 
+   --------------------------------------------------
+
+1. CHOIX D'UNE CONFIGURATION POUR UN PC 
+
+2. AFFICHAGE DES N PREMIERS NOMBRES PREMIERS 
+
+3. GESTION D'UN FICHIER TEXTE AVEC UNE INTERFACE GRAPHIQUE
+
+4. GESTION D'UNE LISTE CHAINEE
+
+
+
+Les fichiers sources doivent être dûment commentés 
+ (rôle des données et des fonctions membres,
+  des variables de travail choisies pour qu'elles soient mnémoniques)
+
+L'ensemble des tps doit être compacté,
+ avec comme nom de fichier compacté,
+ le groupe suivi du nom du binôme (ex. ASPE_DUPONT_DURAND_IHM.zip ou .rar)
+
+Le fichier fichier compacté est à envoyer comme fichier
+ATTACHE d'un e-mail adressé à
+       
+     mooneswar.ramburrun@univ-lyon1.fr
+
+avec comme "objet" de l'e-mail le groupe et le binôme rendant le TP 
+ (ex. ASPE_DUPONT_DURAND_IHM)
+au plus tard le mardi 7 juin 2016.
+
+
