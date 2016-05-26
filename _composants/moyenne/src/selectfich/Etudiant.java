@@ -37,7 +37,7 @@ public class Etudiant {
     }
     @Override
     public String toString(){
-        return (this.nom+"       "+ (String.format("%.2f",this.getNote1()))+"           "+(String.format("%.2f",this.getNote2()))+"        "+this.moyenne());
+        return (this.nom+"       "+ Filtre.formatDouble(this.getNote1())+"           "+Filtre.formatDouble(this.getNote2())+"        "+ Filtre.formatDouble(this.moyenne()));
     }
     
     
