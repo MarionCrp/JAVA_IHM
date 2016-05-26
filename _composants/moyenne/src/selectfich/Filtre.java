@@ -25,4 +25,16 @@ public class Filtre extends javax.swing.filechooser.FileFilter {
  {
 	 return "(*.txt)";
  }
+ /**
+  * 
+  * 
+  * @author Marion et Martin
+  */
+ public static String formatDouble(double number){
+     if(number < 10) {
+         return ("0"+String.format("%.2f", number));
+     } else {
+         return String.format("%.2f", number);
+     }
+ }
 }
