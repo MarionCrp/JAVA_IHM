@@ -157,7 +157,7 @@ public class SelectFich extends javax.swing.JFrame {
 
     private void calculeMoyenne(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculeMoyenne
 
-                File fe;
+        File fe;
         fe = new File(fichierSelectionne);
         listModel.clear();
         
@@ -188,7 +188,6 @@ public class SelectFich extends javax.swing.JFrame {
                 
                 Etudiant etudiant = new Etudiant(nomEtudiant, notesEtudiant);
                 listeEtudiants.add(etudiant);
-                listModel.addElement(enr);
             }
             ArrayList<Double> notesDS1 = new ArrayList<Double>();
             ArrayList<Double> notesDS2 = new ArrayList<Double>();
