@@ -18,8 +18,8 @@ public class GestionEnsemble extends javax.swing.JFrame {
         initComponents();
         A = new java.util.TreeSet<>();
         B = new java.util.TreeSet<>();
-        C = new java.util.TreeSet<>();
-        D = new java.util.TreeSet<>();
+        union = new java.util.TreeSet<>();
+        intersection = new java.util.TreeSet<>();
         textValA.selectAll();
         textValA.requestFocus();
         setLocation(110,150);
@@ -64,13 +64,13 @@ public class GestionEnsemble extends javax.swing.JFrame {
         labelAnB.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         labelAnB.setText("AnB");
 
-        champA.setEnabled(false);
+        champA.setEditable(false);
 
-        champB.setEnabled(false);
+        champB.setEditable(false);
 
-        champAUB.setEnabled(false);
+        champAUB.setEditable(false);
 
-        champAnB.setEnabled(false);
+        champAnB.setEditable(false);
 
         insererA.setText("Insérer");
         insererA.addActionListener(new java.awt.event.ActionListener() {
@@ -89,14 +89,14 @@ public class GestionEnsemble extends javax.swing.JFrame {
         supprimerA.setText("Supprimer");
         supprimerA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                supprimer(evt);
+                supprimerA(evt);
             }
         });
 
         supprimerB.setText("Supprimer");
         supprimerB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                supprimer(evt);
+                supprimerB(evt);
             }
         });
 
@@ -166,16 +166,85 @@ public class GestionEnsemble extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void insererA(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insererA
-        lireEtValider(textValA);
+        
+        if(lireEtValider(textValA)){
+            valainsererA = Integer.parseInt(textValA.getText());
+            A.add(valainsererA);
+            champA.setText(A.toString());
+        }
+        textValA.setText("");
+        union();
+        intersection();
     }//GEN-LAST:event_insererA
 
     private void insererB(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insererB
-        // TODO add your handling code here:
+        if(lireEtValider(textValB)){
+            valainsererB = Integer.parseInt(textValB.getText());
+            B.add(valainsererB);
+            champB.setText(B.toString());
+        }
+        textValB.setText("");
+        union();
+        intersection();
     }//GEN-LAST:event_insererB
 
-    private void supprimer(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supprimer
-        // TODO add your handling code here:
-    }//GEN-LAST:event_supprimer
+    private void supprimerB(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supprimerB
+        if(lireEtValider(textValB)){
+            valasupprimerB = Integer.parseInt(textValB.getText());
+            if(B.contains(valasupprimerB)){
+                B.remove(valasupprimerB);
+            }
+            champB.setText(B.toString());
+            intersection();
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(
+               this,
+               "le nombre à supprimer n'est pas dans la liste",
+               "Résultat",
+               javax.swing.JOptionPane.PLAIN_MESSAGE);
+        }
+        textValB.setText("");
+    }//GEN-LAST:event_supprimerB
+
+    private void supprimerA(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supprimerA
+        if(lireEtValider(textValA)){
+            valasupprimerA = Integer.parseInt(textValA.getText());
+            if(A.contains(valasupprimerA)){
+                A.remove(valasupprimerA);
+            }
+            champA.setText(A.toString());
+            intersection();
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(
+               this,
+               "le nombre à supprimer n'est pas dans la liste",
+               "Résultat",
+               javax.swing.JOptionPane.PLAIN_MESSAGE);
+        }
+        textValA.setText("");
+    }//GEN-LAST:event_supprimerA
+    
+    private void union(){
+        union.addAll(A);
+        union.addAll(B);
+        champAUB.setText(union.toString());
+    }
+    
+    private void intersection(){
+        
+        for(int a:A){
+            if(B.contains(a)){
+                intersection.add(a);
+            } else {
+                if(intersection.contains(a)){
+                    intersection.remove(a);
+                }
+          //PAS FINI ! Quand on supprime ça se met pas bien à jour
+            }
+        }
+        
+        champAnB.setText(intersection.toString());
+    }
     
     private boolean lireEtValider(javax.swing.JTextField element)
     {
@@ -185,9 +254,10 @@ public class GestionEnsemble extends javax.swing.JFrame {
      }catch ( NumberFormatException e ) {
         javax.swing.JOptionPane.showMessageDialog(
                this,
-               "Vous êtes mauvais",
+               "Veuiller entrer un nombre",
                "Résultat",
-               javax.swing.JOptionPane.PLAIN_MESSAGE); 
+               javax.swing.JOptionPane.PLAIN_MESSAGE);
+        element.setText("");
      }
      return ok;
    }
@@ -245,8 +315,8 @@ public class GestionEnsemble extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     java.util.SortedSet<Integer> A;
     java.util.SortedSet<Integer> B;
-    java.util.SortedSet<Integer> C;
-    java.util.SortedSet<Integer> D;
+    java.util.SortedSet<Integer> union;
+    java.util.SortedSet<Integer> intersection;
     private int valainsererA;
     private int valasupprimerA;
     private int valainsererB;
