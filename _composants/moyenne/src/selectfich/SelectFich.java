@@ -9,8 +9,8 @@ package selectfich;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import static java.lang.Math.pow;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 
 /**
@@ -164,52 +164,48 @@ public class SelectFich extends javax.swing.JFrame {
         BufferedReader fent;
         try {
             fent = new BufferedReader(new FileReader(fe));
-            System.out.println("Voici le contenu du fich:");
             String enr;
             
             ArrayList<Etudiant> listeEtudiants = new ArrayList<Etudiant>();
-            double totalDS1 = 0;
-            double totalDS2 = 0;
             double totalEtudiants = 0;
-            double moyenneDS1 = 0;
-            double moyenneDS2 = 0;
             double moyenneEtudiants = 0;
-            double ecartTypeDS1 = 0;
-            double ecartTypeDS2 = 0;
-            double totalnote1carre = 0;
-            double totalnote2carre = 0;
-            
-            int nbEtudiant;
-            
+
             while((enr=fent.readLine())!=null){
-                String nomEtudiant = enr.substring(0,20);
                 ArrayList<Double> notesEtudiant = new ArrayList<Double>();
-                notesEtudiant.add(Double.parseDouble(enr.substring(20,25)));
-                notesEtudiant.add(Double.parseDouble(enr.substring(26,31)));
+                StringTokenizer st = new StringTokenizer(enr);
+                //On récupère les 20 premiers caractères et le stoque dans le nom que l'on attribuera à l'étudiant.
+                String nomEtudiant = enr.substring(0,20);
+                
+                st.nextToken(); st.nextToken(); // On saute les deux premiers mots de la chaine (le nom et prénom)
+                while(st.hasMoreTokens()){ // On attribue chaque mot (notes) aux notes de l'étudiant.
+                    try {
+			notesEtudiant.add(Double.parseDouble(st.nextToken()));
+                    } catch (NumberFormatException nfe) {
+                        listModel.addElement("ERREUR : Les notes doivent être des nombres");
+                        
+                    }
+                }
+                
                 Etudiant etudiant = new Etudiant(nomEtudiant, notesEtudiant);
                 listeEtudiants.add(etudiant);
-                listModel.addElement(enr);
             }
-            
+            ArrayList<Double> notesDS1 = new ArrayList<Double>();
+            ArrayList<Double> notesDS2 = new ArrayList<Double>();
             
             for(Etudiant etudiant : listeEtudiants){
-               listModel.addElement(etudiant.toString());
-               totalDS1 += etudiant.getNote1();
-               totalDS2 += etudiant.getNote2();
+               listModel.addElement(etudiant.toString());           
+               notesDS1.add(etudiant.getNote1());
+               notesDS2.add(etudiant.getNote2());
                totalEtudiants += etudiant.moyenne();
-               totalnote1carre += pow(etudiant.getNote1(),2);
-               totalnote2carre += pow(etudiant.getNote2(),2);
             }
-            nbEtudiant = listeEtudiants.size();
-            moyenneDS1 = totalDS1/nbEtudiant;
-            moyenneDS2 = totalDS2/nbEtudiant;
-            moyenneEtudiants = totalEtudiants/nbEtudiant;
-            ecartTypeDS1 = Math.sqrt((totalnote1carre/nbEtudiant) - pow(moyenneDS1,2));
-            ecartTypeDS2 = Math.sqrt((totalnote2carre/nbEtudiant) - pow(moyenneDS2,2));
+            
+            Ds ds1 = new Ds("DS1", notesDS1);
+            Ds ds2 = new Ds("DS2", notesDS2);
+            moyenneEtudiants = totalEtudiants/listeEtudiants.size();
             
             listModel.addElement("---------------------------");
-            listModel.addElement("Moyenne" + " pour " + nbEtudiant + " etudiants : " + String.format("%.2f",moyenneDS1) + "           " + String.format("%.2f",moyenneDS2) + "      " + String.format("%.2f",moyenneEtudiants));
-            listModel.addElement("Ec.Type" + " pour " + nbEtudiant + " etudiants : " + String.format("%.2f", ecartTypeDS1) + "   " + String.format("%.2f", ecartTypeDS2));
+            listModel.addElement("Moyenne" + " pour " + listeEtudiants.size() + " etudiants : " + Filtre.formatDouble(ds1.moyenne()) + "           " + Filtre.formatDouble(ds2.moyenne()) + "        " + Filtre.formatDouble(moyenneEtudiants));
+            listModel.addElement("Ec.Type" + " pour " + listeEtudiants.size() + " etudiants : " + Filtre.formatDouble(ds1.ecartType()) + "           " + Filtre.formatDouble(ds2.ecartType()));
             
             
         } catch ( java.io.IOException e ) { 
